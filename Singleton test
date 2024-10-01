@@ -1,0 +1,25 @@
+public class SingletonTest {
+    public static void main(String[] args) {
+        DatabaseConnection connection1 = DatabaseConnection.getInstance();
+        DatabaseConnection connection2 = DatabaseConnection.getInstance();
+
+        if (connection1 == connection2) {
+            System.out.println("Оба соединения ссылаются на один и тот же объект (Singleton).");
+        } else {
+            System.out.println("Экземпляры разные, Singleton не работает.");
+        }
+
+        connection1.connect();
+
+        connection2.connect();
+
+        connection1.query("SELECT * FROM users");
+        connection2.query("SELECT * FROM orders");
+
+        connection1.disconnect();
+
+        connection2.query("SELECT * FROM customers");
+
+        connection2.disconnect();
+    }
+}
