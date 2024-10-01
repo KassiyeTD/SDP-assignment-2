@@ -1,0 +1,44 @@
+class DatabaseConnection {
+    private static volatile DatabaseConnection instance;
+    private boolean connected;
+
+    private DatabaseConnection() {
+    }
+
+    public static DatabaseConnection getInstance() {
+        if (instance == null) {
+            synchronized (DatabaseConnection.class) {
+                if (instance == null) {
+                    instance = new DatabaseConnection();
+                }
+            }
+        }
+        return instance;
+    }
+
+    public void connect() {
+        if (!connected) {
+            connected = true;
+            System.out.println("Подключено к базе данных.");
+        } else {
+            System.out.println("Уже подключено к базе данных.");
+        }
+    }
+
+    public void disconnect() {
+        if (connected) {
+            connected = false;
+            System.out.println("Отключено от базы данных.");
+        } else {
+            System.out.println("Соединение уже закрыто.");
+        }
+    }
+
+    public void query(String sql) {
+        if (connected) {
+            System.out.println("Выполняем запрос: " + sql);
+        } else {
+            System.out.println("Ошибка: Нет активного соединения с базой данных.");
+        }
+    }
+}
